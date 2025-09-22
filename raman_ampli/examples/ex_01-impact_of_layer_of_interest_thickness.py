@@ -22,7 +22,7 @@ if __name__ == '__main__':
     # stack creation / graphene
     sup = Layer('INFO_Air', 'Sup', 'inf')
     layer_0 = Layer('INFO_SiO2', 'Surf. Oxide', d_0)
-    layer_1 = Layer('INFO_Graphene', '1ML Graph', d_1)
+    layer_1 = Layer('INFO_Graphene', 'Graphene', d_1)
     layer_11 = Layer('INFO_Si', 'SOI', d_11)
     layer_2 = Layer('INFO_SiO2', 'BOX', d_2)
     sub = Layer('INFO_Si', 'Sub', 'inf')

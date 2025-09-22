@@ -15,14 +15,18 @@ def t_fresnel(n_0, n_1):
     Fresnel transmission coefficient between media 0 and 1.
     Parameters
     ----------
-    n_0
-    n_1
+    n_0: complex
+        optical index of layer 0
+    n_1: complex
+        optical index of layer 1
 
     Returns
     -------
-    Transmission coefficient in amplitude.
+    ts: complex
+        transmission coefficient in amplitude
     """
-    return np.divide(2 * n_0, n_0 + n_1)
+    ts = np.divide(2 * n_0, n_0 + n_1)
+    return ts
 
 
 def r_fresnel(n_0, n_1):
@@ -30,14 +34,18 @@ def r_fresnel(n_0, n_1):
     Fresnel reflection coefficient between media 0 and 1.
     Parameters
     ----------
-    n_0
-    n_1
+    n_0: complex
+        optical index of layer 0
+    n_1: complex
+        optical index of layer 1
 
     Returns
     -------
-    Reflection coefficient in amplitude.
+    rs: complex
+        reflection coefficient in amplitude
     """
-    return np.divide(n_0 - n_1, n_0 + n_1)
+    rs = np.divide(n_0 - n_1, n_0 + n_1)
+    return rs
 
 
 # Norm of wavevector at desired wavelength in layer of index n
@@ -47,31 +55,39 @@ def wavevector(n, wvl):
     refractive index n (complex).
     Parameters
     ----------
-    n
-    wvl
+    n: complex
+        Optical index (real & imaginary parts considered)
+    wvl: float
+        Excitation or scattered wavelength
 
     Returns
     -------
-    Wavevector
+    wavevector: complex
+        wavevector of the wave
     """
-    return np.divide(2 * pi * n, wvl)
+    wavevector = np.divide(2 * pi * n, wvl)
+    return wavevector
 
 
 # Exponential phase factor due to multireflections
 def phase(beta, thick):
     """
     Phase factor associated to the propagation of light in a layer of thickness
-    'th'.
+    'thick'.
     Parameters
     ----------
-    beta
-    thick
+    beta: complex
+        wavevector
+    thick: float
+        thickness of layer
 
     Returns
     -------
-    Phase factor
+    phase_factor: complex
+        exponential phase shift induced by light propagation
     """
-    return np.exp(-1j * beta * thick)
+    phase_factor = np.exp(-1j * beta * thick)
+    return phase_factor
 
 
 # Fabry-Perot r & t amplitude coefficients - stack of 2 interfaces
@@ -81,15 +97,20 @@ def r_fp(r_ij, r_jk, exp_shift):
     stack.
     Parameters
     ----------
-    r_ij
-    r_jk
-    exp_shift
+    r_ij: complex
+        Fresnel reflection at interface i/j
+    r_jk: complex
+        Fresnel reflection at interface j/k
+    exp_shift: complex
+        Propagation phase factor
 
     Returns
     -------
-    Reflection coefficient
+    reflection_fp: complex
+        Reflection coefficient of equivalent 2-layer stack
     """
-    return (r_ij + r_jk * exp_shift ** 2) / (1 + r_ij * r_jk * exp_shift ** 2)
+    reflection_fp = (r_ij + r_jk * exp_shift ** 2) / (1 + r_ij * r_jk * exp_shift ** 2)
+    return reflection_fp
 
 
 def t_fp(t_ij, t_jk, r_ij, r_jk, exp_shift):
@@ -98,17 +119,24 @@ def t_fp(t_ij, t_jk, r_ij, r_jk, exp_shift):
     stack.
     Parameters
     ----------
-    t_ij
-    t_jk
-    r_ij
-    r_jk
-    exp_shift
+    t_ij: complex
+        Fresnel transmission at interface i/j
+    t_jk: complex
+        Fresnel transmission at interface j/k
+    r_ij: complex
+        Fresnel reflection at interface i/j
+    r_jk: complex
+        Fresnel reflection at interface j/k
+    exp_shift: complex
+        Propagation phase shift
 
     Returns
     -------
-    Transmission coefficient
+    transmission_fp: complex
+        Transmission coefficient of equivalent 2-Layer stack
     """
-    return (t_ij * t_jk * exp_shift) / (1 + r_ij * r_jk * exp_shift ** 2)
+    transmission_fp = (t_ij * t_jk * exp_shift) / (1 + r_ij * r_jk * exp_shift ** 2)
+    return transmission_fp
 
 
 def thick_list(stack):
@@ -116,11 +144,13 @@ def thick_list(stack):
     Get the list of thicknesses from any 'stack'.
     Parameters
     ----------
-    stack
+    stack: list
+        List of layers (defined by their material table and thickness)
 
     Returns
     -------
-    Array of thicknesses.
+    thick: list
+        List of thicknesses obtained from each of the layers of the stack
     """
     thick = []
     for layer in stack:
@@ -134,12 +164,15 @@ def n_list(stack, wvl):
     Get the list of refractive indices from any 'stack'.
     Parameters
     ----------
-    stack
-    wvl
+    stack: list
+        List of layers (defined by their material table and thickness)
+    wvl: float
+        Excitation or scattered wavelength
 
     Returns
     -------
-    Array of refractive indices
+    n: list
+        List of optical indices (obtained from each of the layers present in the stack)
     """
     # loop to get refractive index list (for each layer)
     n = []
@@ -154,12 +187,15 @@ def r_list(stack, wvl):
     Get the list of reflection coefficients from any 'stack'.
     Parameters
     ----------
-    stack
-    wvl
+    stack: list
+        List of layers (defined by their material table and thickness)
+    wvl: float
+        Excitation or scattered wavelength
 
     Returns
     -------
-    Array of reflection coefficients.
+    r: list
+        List of reflection coefficients calculated at each interface of the stack
     """
     # r list (Fresnel calculation from stack, from top to bottom)
     r = []
@@ -175,12 +211,15 @@ def t_list(stack, wvl):
     Get the list of transmission coefficients from any 'stack'.
     Parameters
     ----------
-    stack
-    wvl
+    stack: list
+        List of layers (defined by their material table and thickness)
+    wvl: float
+        Excitation or scattered wavelength
 
     Returns
     -------
-    Array of transmission coefficients.
+    t: list
+        List of transmission coefficients calculated at each interface of the stack
     """
     t = []
     n = n_list(stack, wvl)
@@ -197,17 +236,14 @@ def rt_fresnel(stack, wvl):
     Parameters
     ----------
     stack: list
-        array of layers (material + thickness) >> sub stack (top, bottom,
-    reversed...)
+        List of layers (defined by their material table and thickness)
     w: float
-        wavelength
+        Excitation or scattered wavelength
 
     Returns
     -------
     r_stack, t_stack: complex
-        of input (sub) stack
-        stack may be from layer 0 to i, i to N-1, i to 0... defined in Factor
-        function
+        Reflection and transmission coefficients of the stack
     """
 
     if len(stack) == 2:
@@ -248,18 +284,18 @@ def factor_other(stack, layer_int, wvl, mode):
     changed (e.g., changing oxide layer thickness and fixed silicon layer).
     Parameters
     ----------
-    stack = array of layers (material + thickness) >> total stack
-    layer_int = defined layer of interest (the one which Raman-scatters)
-    w = wavelength
-    mode = 'abs' or 'scat' (string)
+    stack: list
+        List of layers (defined by their material table and thickness)
+    layer_int: class Layer
+    w: float
+        Excitation or scattered wavelength
+    mode: string
+        'abs' (light absorption at excitation wavelength) or 'scat' (light scattering at Raman-scattered wavelength)
 
     Returns
     -------
-    List of lists ('macro-list')
-    If the 'layer of interest' has only one thickness, then the macro-list is
-    of length equal to 1.
-    Each sub-list contains the abs. or scat. values for each x (depth) in th_i
-    th_LOI = [th_0...th_i...th_p-1]
+    f_x: list
+        Absorption or scattering factors in the layer of interest at depth x, when varying the thickness of another layer.
     """
 
     n = n_list(stack, wvl)
@@ -332,18 +368,18 @@ def factor_layerint(stack, layer_int, wvl, mode):
 
     Parameters
     ----------
-    stack = array of layers (material + thickness) >> total stack
-    layer_int = defined layer of interest (the one which Raman-scatters)
-    w = wavelength
-    mode = 'abs' or 'scat' (string)
+    stack: list
+        List of layers (defined by their material table and thickness)
+    layer_int: class Layer
+    w: float
+        Excitation or scattered wavelength
+    mode: string
+        'abs' (light absorption at excitation wavelength) or 'scat' (light scattering at Raman-scattered wavelength)
 
     Returns
     -------
-    List of lists ('macro-list')
-    If the 'layer of interest' has only one thickness, then the macro-list is
-    of length equal to 1.
-    Each sub-list contains the abs. or scat. values for each x (depth) in d_i
-    d_int = [d_0...d_i...d_p-1]
+    f_x: list
+        Absorption or scattering factors in the layer of interest at depth x, when varying the thickness of the layer of interest.
     """
 
     n = n_list(stack, wvl)
@@ -404,13 +440,15 @@ def square_mod(x):
     Computes the square modulus of any complex number x.
     Parameters
     ----------
-    x
+    x: complex
 
     Returns
     -------
-    The square modulus of x.
+    sq_mod: float
+        Square modulus of x
     '''
-    return x.real ** 2 + x.imag ** 2
+    sq_mod = x.real ** 2 + x.imag ** 2
+    return sq_mod
 
 
 def integral(f_ab, f_sc):
@@ -418,13 +456,16 @@ def integral(f_ab, f_sc):
 
     Parameters
     ----------
-    f_ab
-    f_sc
+    f_ab: list
+        List of absorption factors
+    f_sc: list
+        List of scattering factors
 
     Returns
     -------
-    List of integrated Raman intensities. If the 'layer of interest' contains
-    only one thickness, the list has only one element
+    integ: list
+        List of integrated Raman intensities. If the 'layer of interest' contains
+    only one thickness, the list has only one element.
     """
 
     factor = np.multiply(f_ab, f_sc)

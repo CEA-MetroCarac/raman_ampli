@@ -13,7 +13,7 @@ from raman_ampli.simulator import SimYoon
 def otherlayer_amplification(make_plots=True):
     # layers definition
     d_0 = 0
-    d_1 = 0.34
+    d_1 = 0.34 # 1 ML
     d_11 = 10
     d_2 = np.linspace(start=0, stop=300, num=100)
 
