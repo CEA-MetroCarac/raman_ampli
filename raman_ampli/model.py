@@ -263,10 +263,10 @@ def rt_fresnel(stack, wvl):
 
         r_int, t_int = r[0], t[0]
 
-        thick_last = thick[1]
-        n_last = n[1]
-        beta = wavevector(n_last, wvl)
-        exp_shift = phase(beta, thick_last)
+        thick_first = thick[1]
+        n_first = n[1]
+        beta = wavevector(n_first, wvl)
+        exp_shift = phase(beta, thick_first)
 
         stack.pop(0)
         r_rec, t_rec = rt_fresnel(stack, wvl)
