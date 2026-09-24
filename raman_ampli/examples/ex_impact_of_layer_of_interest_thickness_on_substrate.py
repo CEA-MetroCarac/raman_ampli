@@ -56,7 +56,7 @@ def substrate_amplification(make_plots=True):
         plt.yscale('log')
         plt.plot(d_1, intensity)
         plt.xlabel(str(xlabel) + ' thickness [nm]')
-        plt.ylabel(str(ylabel) + 'amplification')
+        plt.ylabel(str(ylabel) + ' amplification')
         plt.show()
         return
     else:
