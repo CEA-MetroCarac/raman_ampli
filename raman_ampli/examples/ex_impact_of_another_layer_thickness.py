@@ -53,10 +53,10 @@ def otherlayer_amplification(make_plots=True):
                                               shift=raman_shift)
     if make_plots:
         plt.figure('Thickness study')
-        plt.title(str(ylabel) + '-dependent Raman signal')
+        plt.title('Interference-enhanced Raman intensity')
         plt.plot(d_2, intensity)
         plt.xlabel(str(xlabel) + ' thickness [nm]')
-        plt.ylabel('Raman intensity [a.u.]')
+        plt.ylabel(str(ylabel) + 'Raman intensity [a.u.]')
         plt.show()
     else:
         return d_2, intensity
