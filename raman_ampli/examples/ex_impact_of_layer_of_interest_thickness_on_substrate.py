@@ -52,11 +52,11 @@ def substrate_amplification(make_plots=True):
 
     if make_plots:
         plt.figure('Thickness study')
-        plt.title(str(ylabel) + '-dependent Raman signal')
+        plt.title('Interference-enhanced Raman intensity')
         plt.yscale('log')
         plt.plot(d_1, intensity)
         plt.xlabel(str(xlabel) + ' thickness [nm]')
-        plt.ylabel('Raman intensity [a.u.]')
+        plt.ylabel(str(ylabel) + 'amplification')
         plt.show()
         return
     else:
