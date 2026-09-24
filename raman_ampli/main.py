@@ -83,7 +83,7 @@ def process(fname):
     intensity_list = intensity.tolist()
 
     worksheet.write('A1', str(xlabel) + ' thickness [nm]')
-    worksheet.write('B1', str(ylabel) + ' intensity [a.u.]')
+    worksheet.write('B1', str(ylabel) + ' amplification')
     worksheet.write_column(1, 0, thickness_var_list)
     worksheet.write_column(1, 1, intensity_list)
 
@@ -93,7 +93,7 @@ def process(fname):
                       'values': '=enhancement_results!$B$2:$B$' + str(N)})
     chart.set_title({'name': 'Interference-enhanced Raman intensity'})
     chart.set_x_axis({'name': str(xlabel) + ' thickness [nm]'})
-    chart.set_y_axis({'name': str(ylabel) + ' intensity [a.u.]'})
+    chart.set_y_axis({'name': str(ylabel) + ' amplification'})
     chart.set_style(2)
     chart.set_legend({'delete_series': [0]})
 
