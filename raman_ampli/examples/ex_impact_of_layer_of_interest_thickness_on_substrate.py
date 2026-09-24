@@ -37,6 +37,7 @@ def substrate_amplification(make_plots=True):
 
     # creation of layer of interest
     layer_interest = raman_stack[3]
+    ylabel = layer_interest.label
 
     # creation of variable layer
     layer_var = raman_stack[1]
@@ -51,7 +52,7 @@ def substrate_amplification(make_plots=True):
 
     if make_plots:
         plt.figure('Thickness study')
-        plt.title(str(xlabel) + '-dependent Raman signal')
+        plt.title(str(ylabel) + '-dependent Raman signal')
         plt.yscale('log')
         plt.plot(d_1, intensity)
         plt.xlabel(str(xlabel) + ' thickness [nm]')
