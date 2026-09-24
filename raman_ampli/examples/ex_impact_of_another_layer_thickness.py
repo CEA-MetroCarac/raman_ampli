@@ -56,7 +56,7 @@ def otherlayer_amplification(make_plots=True):
         plt.title('Interference-enhanced Raman intensity')
         plt.plot(d_2, intensity)
         plt.xlabel(str(xlabel) + ' thickness [nm]')
-        plt.ylabel(str(ylabel) + 'Raman intensity [a.u.]')
+        plt.ylabel(str(ylabel) + 'amplification')
         plt.show()
     else:
         return d_2, intensity
