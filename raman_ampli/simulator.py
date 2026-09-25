@@ -49,7 +49,7 @@ class SimYoon:
         f_sc = m.factor_layerint(stack, loi, wvl_sc, 'scat')
 
         intensity = m.integral(f_ab, f_sc)
-        intensity = intensity / np.max(intensity)
+        #intensity = intensity / np.max(intensity)
 
         return intensity
 
@@ -82,6 +82,6 @@ class SimYoon:
         f_sc = m.factor_other(stack, loi, wvl_sc, 'scat')
 
         intensity = m.integral(f_ab, f_sc)
-        intensity = intensity / np.max(intensity)
+        #intensity = intensity / np.max(intensity)
 
         return intensity
